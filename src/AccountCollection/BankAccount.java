@@ -2,7 +2,7 @@ package AccountCollection;
 
 public abstract class BankAccount {
 
-    private int accountNumber;
+    private int accountNumber; //KLAJFSÖJGF
     protected double balance;
 
     public abstract void deposit(double amount);
