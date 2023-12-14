@@ -15,7 +15,7 @@ public class MyAccountPage extends ExecutePageCreator{
     public void execute() {
         System.out.println("Here is my account page");
         BankAccount a = AccountFactory.createAccount("Saving");
-        a.print();
+        System.out.println(a.print());
 
         System.out.println("Enter 0 to Home Page");
 
