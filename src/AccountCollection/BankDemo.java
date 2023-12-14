@@ -1,7 +1,13 @@
 package AccountCollection;
+import PageFolder.Content;
+import PageFolder.LoginPage;
 
 public class BankDemo {
+
     public static void main(String[] args) {
-        System.out.println("hello");
+
+        PageFolder.Content c = new Content();
+        c.setPage(new LoginPage(c));
+        c.executepage();
     }
 }
