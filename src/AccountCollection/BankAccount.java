@@ -12,5 +12,5 @@ public abstract class BankAccount {
     }
     //getRandomizedAccountNr()
 
-    public String print(){return " ";};
+    public String print(){return "yjdghmj ";};
 }
