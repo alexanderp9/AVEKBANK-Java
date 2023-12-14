@@ -1,18 +1,16 @@
 package AccountCollection;
 
 public abstract class BankAccount {
-    int accountNr;
-    double balance;
 
-    public BankAccount() {
+    private int accountNumber;
+    protected double balance;
+
+    public abstract void deposit(double amount);
+    public abstract void withdraw(double amount);
+    public  double getBalance() {
+        return balance;
     }
-
-    public void deposit() {
-
-    }
-    public void withdraw() {
-
-    }
+    //getRandomizedAccountNr()
 
     public String print(){return " ";};
 }
