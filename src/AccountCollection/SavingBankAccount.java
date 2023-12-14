@@ -1,6 +1,10 @@
 package AccountCollection;
 
+import java.util.Random;
+
 public class SavingBankAccount extends BankAccount {
+    private double interestRate;
+
     public void deposit(double amount) {
         super.balance =+ amount;
     }
@@ -10,8 +14,14 @@ public class SavingBankAccount extends BankAccount {
     public double getBalance() {
         return super.balance;
     }
+
+    public int getRandomizedAccountNr(){
+        Random random = new Random();
+        return random.nextInt(100000,999999);
+    }
+
     @Override
     public String print(){
-        return "i have saving account 1";
+        return "";
     }
 }

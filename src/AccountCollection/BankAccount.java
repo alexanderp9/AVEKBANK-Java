@@ -1,8 +1,10 @@
 package AccountCollection;
 
+import java.util.Random;
+
 public abstract class BankAccount {
 
-    private int accountNumber; //KLAJFSÖJGF
+    private int accountNumber;
     protected double balance;
 
     public abstract void deposit(double amount);
@@ -10,7 +12,10 @@ public abstract class BankAccount {
     public  double getBalance() {
         return balance;
     }
-    //getRandomizedAccountNr()
+    public int getRandomizedAccountNr(){
+        Random random = new Random();
+        return random.nextInt(100000,999999);
+    }
 
-    public String print(){return "yjdghmj ";};
+    public String print(){return "From BankAccount ";};
 }
