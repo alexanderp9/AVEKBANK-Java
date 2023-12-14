@@ -1,4 +1,6 @@
 package PageFolder;
+import AccountCollection.AccountFactory;
+import AccountCollection.BankAccount;
 
 import java.util.Scanner;
 
@@ -12,6 +14,9 @@ public class MyAccountPage extends ExecutePageCreator{
     @Override
     public void execute() {
         System.out.println("Here is my account page");
+        BankAccount a = AccountFactory.createAccount("Saving");
+        a.print();
+
         System.out.println("Enter 0 to Home Page");
 
         Scanner sc = new Scanner(System.in);
