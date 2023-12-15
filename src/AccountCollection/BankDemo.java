@@ -23,6 +23,9 @@ public class BankDemo {
         int userAccountChoice = -1;
         while (userAccountChoice != 0) { // kommer köra loopen tills vi trycker 0 så hoppar den ut och tillbaka till main loopen
             System.out.println("Account page of customer: " + customer.getBankId());
+            if (customer.getAccounts().size()==0){
+                System.out.println("You have empty accounts now. Choose 8-9 to create one.");
+            }
             System.out.println(customer.printoutAccountsWithIndex());
             System.out.println("1-7 - Choose account");
             System.out.println("8 - Create a new Checking account");
