@@ -9,6 +9,9 @@ public class Customer {
     private int bankId;
     private List<BankAccount> accounts;
 
+    //list<BankAccount> Saving;
+    //list<BankAccount> Checking;
+
     public Customer(int bankId) {
         this.bankId = bankId;
         this.accounts = new ArrayList<>();
@@ -16,7 +19,7 @@ public class Customer {
 
 
 
-    public void addAccountToList(String accountType) {
+    public void addAccountToList(AccountType accountType) {
         BankAccount newAccount = AccountFactory.createAccount(accountType);
         newAccount.setAccountNumber(getRandomizedAccountNr());
         accounts.add(newAccount);
@@ -47,7 +50,10 @@ public class Customer {
         for (int i = 0; i < accounts.size(); i++) {
             BankAccount account = accounts.get(i);
             sb.append("Account choice: ").append(i+1)
-                    .append(", Account-number: ").append(account.getAccountNumber())
+//                    .append(", Account-number: ").append(account.getAccountNumber())
+                    .append(", ")
+                    .append(account.getAccountType())
+                    .append(" Account-number: ").append(account.getAccountNumber())
                     .append(", Balance: ").append(account.getBalance())
                     .append("\n");
         }

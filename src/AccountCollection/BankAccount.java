@@ -7,6 +7,8 @@ public abstract class BankAccount {
     private int accountNumber;
     protected double balance;
 
+    private String accountType;
+
     public int getAccountNumber() {
         return accountNumber;
     }
@@ -26,6 +28,14 @@ public abstract class BankAccount {
     public int getRandomizedAccountNr(){
         Random random = new Random();
         return random.nextInt(100000,999999);
+    }
+
+    public String getAccountType(){
+        return this.accountType;
+    }
+
+    public void setAccountType(String accountType){
+        this.accountType = accountType;
     }
 
 }

@@ -36,9 +36,9 @@ public class BankDemo {
                 System.out.println(customer.printOutActualAccountBalance(1));
                 accountHandler(customer, userAccountChoice);
             } else if (userAccountChoice == 8) {
-                customer.addAccountToList("Checking");
+                customer.addAccountToList(AccountType.CHECKING);
             } else if (userAccountChoice == 9) {
-                customer.addAccountToList("Saving");
+                customer.addAccountToList(AccountType.SAVING);
             } else if (userAccountChoice >= 10) {
                 System.out.println("Invalid option");
             } else if (userAccountChoice == 0) {
@@ -55,7 +55,7 @@ public class BankDemo {
         System.out.println("1 - About Bank");
         System.out.println("2 - My Accounts");
         System.out.println("3 - Log out");
-        System.out.println("0 - Return to homepage");
+//        System.out.println("0 - Return to homepage");
 
         int userChoice;
         while (true) {
