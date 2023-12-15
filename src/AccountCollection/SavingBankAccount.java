@@ -6,10 +6,10 @@ public class SavingBankAccount extends BankAccount {
     private double interestRate;
 
     public void deposit(double amount) {
-        super.balance =+ amount;
+        super.balance += amount;
     }
     public void withdraw(double amount) {
-        super.balance =- amount;
+        super.balance -= amount;
     }
     public double getBalance() {
         return super.balance;
@@ -20,8 +20,4 @@ public class SavingBankAccount extends BankAccount {
         return random.nextInt(100000,999999);
     }
 
-    @Override
-    public String print(){
-        return "";
-    }
 }

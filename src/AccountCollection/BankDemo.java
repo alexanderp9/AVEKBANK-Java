@@ -1,13 +1,10 @@
 package AccountCollection;
 
-import java.util.Arrays;
 import java.util.Scanner;
-
-import static AccountCollection.AccountFactory.createAccount;
 
 public class BankDemo {
 
-   private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -18,70 +15,94 @@ public class BankDemo {
         Customer customer = new Customer(bankId);
         System.out.println("Authentication Succed!");
         System.out.println("Welcome customer: " + bankId);
+        mainMenu(customer);
+    }
+
+    private static void accountsMenu(Customer customer) {
+
+        int userAccountChoice = -1;
+        while (userAccountChoice != 0) { // kommer köra loopen tills vi trycker 0 så hoppar den ut och tillbaka till main loopen
+            System.out.println("Account page of customer: " + customer.getBankId());
+            System.out.println(customer.printoutAccountsWithIndex());
+            System.out.println("1-7 - Choose account");
+            System.out.println("8 - Create a new Checking account");
+            System.out.println("9 - Create a new Saving account");
+            System.out.println("0 - Return to homepage");
+
+            userAccountChoice = sc.nextInt();
+            sc.nextLine();
+
+            if (userAccountChoice >= 1 && userAccountChoice <= 7 && !customer.getAccounts().isEmpty()) {
+                System.out.println(customer.printOutActualAccountBalance(1));
+                accountHandler(customer, userAccountChoice);
+            } else if (userAccountChoice == 8) {
+                customer.addAccountToList("Checking");
+            } else if (userAccountChoice == 9) {
+                customer.addAccountToList("Saving");
+            } else if (userAccountChoice >= 10) {
+                System.out.println("Invalid option");
+            } else if (userAccountChoice == 0) {
+                mainMenu(customer);
+            }
+        }
+    }
+
+    private static void aboutBank() {
+        System.out.println("Info om banken");
+    }
+
+    private static void mainMenu(Customer customer) {
+        System.out.println("1 - About Bank");
+        System.out.println("2 - My Accounts");
+        System.out.println("3 - Log out");
+        System.out.println("0 - Return to homepage");
 
         int userChoice;
         while (true) {
-            showMenu();
             userChoice = sc.nextInt();
             sc.nextLine();
 
             if (userChoice == 1) {
                 aboutBank();
             } else if (userChoice == 2) {
-                handleAccounts(customer);
+                accountsMenu(customer);
             } else if (userChoice == 3) {
                 System.exit(0);
             } else if (userChoice == 0) {
 
             }
         }
-
     }
 
-    private static void handleAccounts(Customer customer) {
-
-        //logik för att hantera att skapa nya accounts med customer objektet som skapades tidigare.
-        // vi kan printa ut listan av accounts objekts som skapats här antar jag
-        // om det inte finnns några kan vi ha meny att välja att skapa en med createAccount här kanske och läggs till i listan
-        // vi kan displaya listan hela tiden och kanske ha någon logik om den är tom att bara skriva en sträng att man inte har några konton
+    private static void accountHandler(Customer customer, int accountIndex) {
         int userAccountChoice = -1;
-        while (userAccountChoice != 0) { // kommer köra loopen tills vi trycker 0 så hoppar den ut och tillbaka till main loopen
-            System.out.println("Account page of customer: " + customer.getBankId());
-            System.out.println("Print accounts from the list here maybe");
-            System.out.println("1 - Create a new account");
-            System.out.println("0 - Return to homepage");
-
+        while (userAccountChoice != 0) {
+            System.out.println("Accounthandler page of customer: " + customer.getBankId());
+            System.out.println(customer.printOutActualAccountBalance(accountIndex));
+            System.out.println("1 - Deposit");
+            System.out.println("2 - Withdraw");
+            System.out.println("0 - Go back to Account page");
 
             userAccountChoice = sc.nextInt();
             sc.nextLine();
 
-            if (userAccountChoice == 1) {
-                //createAccount(customer);
-                customer.addAccountToList("Checking");
-                System.out.println("Här är dina konton: " + Arrays.toString(customer.getAccounts().toArray()));
-
-                // behöver ha logik att skapa accounts, men den måste nog ha en customer referens för att veta vilket objekt som ska skapa sina account objekt till sig själv
-            } else if (userAccountChoice != 0) {
-                System.out.println("Invalid option");
+            if (userAccountChoice == 1) { //Deposit
+                System.out.println("How much do you want to deposit into your account? ");
+                userAccountChoice = sc.nextInt();
+                sc.nextLine();
+                customer.getAccounts().get(accountIndex-1).deposit(userAccountChoice);
+                accountHandler(customer, accountIndex);
+            } else if (userAccountChoice == 2) { //Withdraw
+                System.out.println("How much do you want to withdraw your account? ");
+                userAccountChoice = sc.nextInt();
+                sc.nextLine();
+                customer.getAccounts().get(accountIndex-1).withdraw(userAccountChoice);
+                accountHandler(customer, accountIndex);
+            } else if (userAccountChoice == 0) { //Back to handleAccount
+                accountsMenu(customer);
             }
-
         }
     }
-
-/*    private static void createAccount(Customer customer) {
-
-        // fabriken här inne tror jag blir bra med logiken if/case kanske enums för att välja vilket typ av account objekt man skapar
-
-    }*/
-
-    private static void aboutBank() {
-        System.out.println("Info om banken");
-    }
-
-    private static void showMenu() {
-        System.out.println("1 - About Bank");
-        System.out.println("2 - My Accounts");
-        System.out.println("3 - Log out");
-        System.out.println("0 - Return to homepage");
-    }
 }
+
+
