@@ -1,4 +1,6 @@
-package PageFolder;
+/*package PageFolder;
+
+import AccountCollection.Customer;
 
 import java.util.Scanner;
 
@@ -33,3 +35,5 @@ public class HomePage extends ExecutePageCreator{
         sc.close();
     }
 }
+/
+ */

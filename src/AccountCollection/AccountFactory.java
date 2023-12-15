@@ -3,6 +3,7 @@ package AccountCollection;
 public class AccountFactory {
     public static BankAccount createAccount(String accountType) {
         BankAccount account = null;
+
         switch (accountType) {
             case "Checking":
                 account = new CheckingBankAccount();
