@@ -48,9 +48,11 @@ public class BankDemo {
     }
 
     private static void aboutBank(Customer customer) {
-        System.out.println("Info om banken" +
-                "\n\nVi är SVEK Bank. Vi tar hand om dina pengar säkert.\n");
-        System.out.println("0 - Return to homepage");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("\t\t\t\tInfo om banken" +
+                "\nVi är SVEK Bank. Vi tar hand om dina pengar säkert.");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("\n0 - Return to homepage");
 
         int userChoice = sc.nextInt();
         sc.nextLine();
