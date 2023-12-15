@@ -47,15 +47,24 @@ public class BankDemo {
         }
     }
 
-    private static void aboutBank() {
-        System.out.println("Info om banken");
+    private static void aboutBank(Customer customer) {
+        System.out.println("Info om banken" +
+                "\n\nVi är SVEK Bank. Vi tar hand om dina pengar säkert.\n");
+        System.out.println("0 - Return to homepage");
+
+        int userChoice = sc.nextInt();
+        sc.nextLine();
+
+        if (userChoice == 0) {
+            mainMenu(customer);
+        }
     }
 
     private static void mainMenu(Customer customer) {
         System.out.println("1 - About Bank");
         System.out.println("2 - My Accounts");
         System.out.println("3 - Log out");
-//        System.out.println("0 - Return to homepage");
+
 
         int userChoice;
         while (true) {
@@ -63,7 +72,7 @@ public class BankDemo {
             sc.nextLine();
 
             if (userChoice == 1) {
-                aboutBank();
+                aboutBank(customer);
             } else if (userChoice == 2) {
                 accountsMenu(customer);
             } else if (userChoice == 3) {
