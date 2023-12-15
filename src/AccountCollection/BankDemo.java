@@ -57,11 +57,16 @@ public class BankDemo {
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("\n0 - Return to homepage");
 
-        int userChoice = sc.nextInt();
-        sc.nextLine();
+        int userChoice;
 
-        if (userChoice == 0) {
-            mainMenu(customer);
+        while (true){
+             userChoice = sc.nextInt();
+            if (userChoice == 0) {
+                mainMenu(customer);
+            } else {
+                System.out.println("Invalid input. Try again.");
+                sc.nextLine();
+            }
         }
     }
 
@@ -74,17 +79,18 @@ public class BankDemo {
         int userChoice;
         while (true) {
             userChoice = sc.nextInt();
-            sc.nextLine();
 
             if (userChoice == 1) {
                 aboutBank(customer);
             } else if (userChoice == 2) {
                 accountsMenu(customer);
             } else if (userChoice == 3) {
+                System.out.println("Thank you. Bye.");
                 System.exit(0);
-            } else if (userChoice == 0) {
-
+            } else {
+                System.out.println("Invalid input. Try again.");
             }
+            sc.nextLine();
         }
     }
 
