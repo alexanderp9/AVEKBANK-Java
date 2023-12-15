@@ -6,7 +6,6 @@ import java.util.List;
 public class Customer {
 
     private int bankId;
-
     private List<BankAccount> accounts;
 
     public Customer(int bankId) {
@@ -27,5 +26,8 @@ public class Customer {
 
     public int getBankId() {
         return bankId;
+    }
+    public List<BankAccount> getAccounts() {
+        return accounts;
     }
 }
