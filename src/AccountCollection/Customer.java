@@ -49,11 +49,8 @@ public class Customer {
         //sb.append("Customer Bank ID: ").append(bankId).append("\n");
         for (int i = 0; i < accounts.size(); i++) {
             BankAccount account = accounts.get(i);
-            sb.append("Account choice: ").append(i+1)
-//                    .append(", Account-number: ").append(account.getAccountNumber())
-                    .append(", ")
-                    .append(account.getAccountType())
-                    .append(" Account-number: ").append(account.getAccountNumber())
+            sb.append("Account choice: ").append(i+1).append(", ")
+                    .append(account.getAccountType()).append(" Account-number: ").append(account.getAccountNumber())
                     .append(", Balance: ").append(account.getBalance())
                     .append("\n");
         }

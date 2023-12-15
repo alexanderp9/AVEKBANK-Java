@@ -34,7 +34,7 @@ public abstract class BankAccount {
         return this.accountType;
     }
 
-    public void setAccountType(String accountType){
+    public void setAccountType(String accountType){ //register the account type to the account
         this.accountType = accountType;
     }
 

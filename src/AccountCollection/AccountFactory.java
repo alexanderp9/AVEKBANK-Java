@@ -8,15 +8,14 @@ public class AccountFactory {
         switch (accountType) {
             case CHECKING:
                 account = new CheckingBankAccount();
-                account.setAccountType(AccountType.CHECKING.accounttype);
+                account.setAccountType(AccountType.CHECKING.accounttype); //register the account type to the account
                 break;
             case SAVING:
                 account = new SavingBankAccount();
-                account.setAccountType(AccountType.SAVING.accounttype);
+                account.setAccountType(AccountType.SAVING.accounttype); //register the account type to the account
                 break;
             default:
                 System.out.println("Fel input i AccountFactory"); break;
-//                throw new IllegalArgumentException("Invalid shape type: " + accountType);
         }
         return account;
     }
