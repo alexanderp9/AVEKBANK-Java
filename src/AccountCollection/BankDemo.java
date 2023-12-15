@@ -12,11 +12,15 @@ public class BankDemo {
         System.out.println("Welcome to AVEK Bank!" +
                 "\nPlease enter your ID number and verify yourself on BankID: ");
 
-        int bankId = sc.nextInt();
-        Customer customer = new Customer(bankId);
-        System.out.println("Authentication Succed!" +
-                "\nWelcome customer: " + bankId);
-        mainMenu(customer);
+        try{
+            int bankId = sc.nextInt();
+            Customer customer = new Customer(bankId);
+            System.out.println("Authentication Succed!" +
+                    "\nWelcome customer: " + bankId);
+            mainMenu(customer);
+        } catch (InputMismatchException e){
+            System.out.println("BankID must be yyyymmddXXXX");
+        }
     }
 
     private static void mainMenu(Customer customer) {
