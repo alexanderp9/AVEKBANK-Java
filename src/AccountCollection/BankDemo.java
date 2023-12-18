@@ -7,6 +7,7 @@ public class BankDemo {
 
     private static final Scanner sc = new Scanner(System.in);
 
+
     public static void main(String[] args) {
 
         System.out.println("Welcome to AVEK Bank!" +
@@ -19,16 +20,19 @@ public class BankDemo {
                     "\nWelcome customer: " + bankId);
             mainMenu(customer);
         } catch (InputMismatchException e){
-            System.out.println("BankID must be yyyymmddXXXX");
+            System.out.println("BankID must be yyyymmdd");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private static void mainMenu(Customer customer) {
+    private static void mainMenu(Customer customer) throws InterruptedException {
         System.out.println("1 - About Bank " +
                 "\n2 - My Accounts " +
-                "\n3 - Log out");
+                "\n3 - Contact Bank" +
+                "\n4 - Log out");
 
-        int userChoice = -1;
+        int userChoice;
         while (true) {
             try{
                 userChoice = sc.nextInt();
@@ -43,6 +47,8 @@ public class BankDemo {
             } else if (userChoice == 2) {
                 accountsMenu(customer);
             } else if (userChoice == 3) {
+                contactBank(customer);
+            } else if (userChoice == 4) {
                 System.out.println("Thank you. Bye.");
                 System.exit(0);
             } else {
@@ -51,10 +57,10 @@ public class BankDemo {
         }
     }
 
-    private static void aboutBank(Customer customer) {
+    private static void aboutBank(Customer customer) throws InterruptedException {
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++" +
                 "\t\t\t\tInfo om banken" +
-                "\nVi är SVEK Bank. Vi tar hand om dina pengar säkert." +
+                "\nVi är AVEK Bank. Vi tar hand om dina pengar säkert." +
                 "+++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("\n0 - Return to homepage");
 
@@ -71,12 +77,12 @@ public class BankDemo {
         }
     }
 
-    private static void accountsMenu(Customer customer) {
+    private static void accountsMenu(Customer customer) throws InterruptedException {
 
         int userAccountChoice = -1;
         while (userAccountChoice != 0) { // kommer köra loopen tills vi trycker 0 så hoppar den ut och tillbaka till main loopen
             System.out.println("Account page of customer: " + customer.getBankId());
-            if (customer.getAccounts().size()==0){
+            if (customer.getAccounts().size() == 0){
                 System.out.println("You have empty accounts now. Choose 8-9 to create one.");
             }
             System.out.println(customer.printoutAccountsWithIndex());
@@ -155,7 +161,26 @@ public class BankDemo {
             } catch (InputMismatchException e){
                 sc.nextLine();
                 System.out.println("Input must be a positive number. Try again.\n");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
+        }
+    }
+
+    public static void contactBank(Customer customer) throws InterruptedException {
+        System.out.println("Customer: " + customer.getBankId() + "\nPlease enter your message: ");
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+        String userMessageInput = sc.nextLine();
+
+        if (!userMessageInput.isEmpty()) {
+            System.out.println("Your message has been sent, thank you! " + "Customer: " + customer.getBankId());
+            System.out.println("Returning to homepage..");
+            Thread.sleep(3000);
+            accountsMenu(customer);
+        } else {
+            System.out.println("Please enter a valid message.");
         }
     }
 
