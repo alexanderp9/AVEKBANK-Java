@@ -14,7 +14,7 @@ public class BankDemo {
                 "\nPlease enter your ID number and verify yourself on BankID: ");
 
         try{
-            int bankId = sc.nextInt();
+            long bankId = sc.nextLong();
             Customer customer = new Customer(bankId);
             System.out.println("Authentication Succed!" +
                     "\nWelcome customer: " + bankId);
@@ -180,7 +180,7 @@ public class BankDemo {
         if (!userMessageInput.isEmpty()) {
             System.out.println("Your message has been sent, thank you! " + "Customer: " + customer.getBankId());
             System.out.println("Returning to homepage..");
-            Thread.sleep(3000);
+            Thread.sleep(2000);
             mainMenu(customer);
         } else {
             System.out.println("Please enter a valid message.");
