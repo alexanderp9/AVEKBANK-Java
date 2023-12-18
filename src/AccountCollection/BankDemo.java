@@ -181,7 +181,7 @@ public class BankDemo {
             System.out.println("Your message has been sent, thank you! " + "Customer: " + customer.getBankId());
             System.out.println("Returning to homepage..");
             Thread.sleep(3000);
-            accountsMenu(customer);
+            mainMenu(customer);
         } else {
             System.out.println("Please enter a valid message.");
         }
