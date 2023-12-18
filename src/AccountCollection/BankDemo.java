@@ -61,7 +61,10 @@ public class BankDemo {
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++" +
                 "\t\t\t\tInfo om banken" +
                 "\nVi är AVEK Bank. Vi tar hand om dina pengar säkert." +
-                "+++++++++++++++++++++++++++++++++++++++++++++++++");
+                "\n+++++++++++++++++++++++++++++++++++++++++++++++++" +
+                "\nÖppettider måndag - fredag 8 - 16" +
+                "\nAdress:" +
+                "\nTelefon nummer:");
         System.out.println("\n0 - Return to homepage");
 
         int userChoice;
