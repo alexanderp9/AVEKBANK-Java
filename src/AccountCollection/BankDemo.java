@@ -146,6 +146,7 @@ public class BankDemo {
                     sc.nextLine();
                     if (checkIfAmountValid(amountInput)){
                         customer.getAccounts().get(accountIndex-1).deposit(amountInput);
+                        System.out.println(customer.getAccounts().get(accountIndex-1).printAllHistory());
                         accountHandler(customer, accountIndex);
                     }
                 } else if (userAccountChoice == 2) { //Withdraw
@@ -154,6 +155,7 @@ public class BankDemo {
                     sc.nextLine();
                     if (checkIfAmountValid(amountInput)){
                         customer.getAccounts().get(accountIndex-1).withdraw(amountInput);
+                        System.out.println(customer.getAccounts().get(accountIndex-1).printAllHistory());
                         accountHandler(customer, accountIndex);
                     }
                 } else if (userAccountChoice == 0) { //Back to handleAccount

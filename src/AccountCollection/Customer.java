@@ -9,6 +9,8 @@ public class Customer extends Person{
     private int bankId;
     private List<BankAccount> accounts;
 
+    private ArrayList<String> accountHistory;
+
     //list<BankAccount> Saving;
     //list<BankAccount> Checking;
 
