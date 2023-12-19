@@ -9,23 +9,17 @@ public class Customer extends Person{
     private long bankId;
     private List<BankAccount> accounts;
 
-    //list<BankAccount> Saving;
-    //list<BankAccount> Checking;
-
     public Customer(long bankId) {
         this.bankId = bankId;
         this.accounts = new ArrayList<>();
     }
 
 
-
+    //Creating an account with createAccount() from class AccountFactory and adding to Customer List<BankAccount> accounts
     public void addAccountToList(AccountType accountType) {
         BankAccount newAccount = AccountFactory.createAccount(accountType);
         newAccount.setAccountNumber(getRandomizedAccountNr());
         accounts.add(newAccount);
-
-        //accounts.add(AccountFactory.createAccount(accountType));  //Creating an account with createAccount() from class AccountFactory
-        // and adding to Customer List<BankAccount> accounts
     }
 
     public int getRandomizedAccountNr(){
@@ -46,13 +40,17 @@ public class Customer extends Person{
 
     public String printoutAccountsWithIndex() {
         StringBuilder sb = new StringBuilder();
-        //sb.append("Customer Bank ID: ").append(bankId).append("\n");
         for (int i = 0; i < accounts.size(); i++) {
             BankAccount account = accounts.get(i);
             sb.append("Account choice: ").append(i+1).append(", ")
                     .append(account.getAccountType()).append(" Account-number: ").append(account.getAccountNumber())
-                    .append(", Balance: ").append(account.getBalance())
-                    .append("\n");
+                    .append(", Balance: ").append(account.getBalance());
+                    //.append("\n");
+            if (account instanceof CreditCardAccount) {
+                CreditCardAccount creditCardAccount = (CreditCardAccount) account;
+                sb.append(", Kortnummer: ").append(creditCardAccount.getCardNumber()).append(", PIN-kod: ").append(creditCardAccount.getCardPIN());
+            }
+            sb.append("\n");
         }
         return sb.toString();
     }

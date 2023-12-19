@@ -1,13 +1,11 @@
 package AccountCollection;
 
-import java.util.Random;
-
 public abstract class BankAccount {
 
     private int accountNumber;
     protected double balance;
-
     private String accountType;
+
 
     public int getAccountNumber() {
         return accountNumber;
@@ -18,7 +16,11 @@ public abstract class BankAccount {
     }
 
     public void deposit(double amount) {
-        balance += amount;
+        if (balance > 0 && amount <= balance) {
+            balance += amount;
+        } else {
+            System.out.println("Det finns inte tillräckligt med pengar på kontot");
+        }
     }
 
     public void withdraw(double amount) {

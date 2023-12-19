@@ -88,7 +88,7 @@ public class BankDemo {
     private static void accountsMenu(Customer customer) throws InterruptedException {
 
         int userAccountChoice = -1;
-        while (userAccountChoice != 0) { // kommer köra loopen tills vi trycker 0 så hoppar den ut och tillbaka till main loopen
+        while (userAccountChoice != 0) {
             System.out.println("Account page of customer: " + customer.getBankId());
             if (customer.getAccounts().size() == 0){
                 System.out.println("You have no accounts yet. Choose 7-9 to create one.");
@@ -134,6 +134,7 @@ public class BankDemo {
             System.out.println(customer.printOutActualAccountBalance(accountIndex));
             System.out.println("1 - Deposit" +
                             "\n2 - Withdraw" +
+                    //3 - Change PIN here if CreditAccount
                             "\n0 - Go back to Account page");
 
             try {
@@ -167,7 +168,7 @@ public class BankDemo {
                 } else if (userAccountChoice == 0) { //Back to handleAccount
                     accountsMenu(customer);
                 } else {
-                    System.out.println("Input must be a positive number. Try again.\n");
+                    System.out.println("Wrong input. Try again.\n");
                 }
             } catch (InputMismatchException e){
                 sc.nextLine();
