@@ -17,18 +17,18 @@ public abstract class BankAccount {
         this.accountNumber = accountNumber;
     }
 
-    public abstract void deposit(double amount);
+    public void deposit(double amount) {
+        balance += amount;
+    }
 
-    public abstract void withdraw(double amount);
+    public void withdraw(double amount) {
+        balance -= amount;
+    }
 
-    public  double getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public int getRandomizedAccountNr(){
-        Random random = new Random();
-        return random.nextInt(100000,999999);
-    }
 
     public String getAccountType(){
         return this.accountType;
