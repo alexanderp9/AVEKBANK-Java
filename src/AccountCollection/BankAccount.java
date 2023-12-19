@@ -17,11 +17,19 @@ public abstract class BankAccount {
         this.accountNumber = accountNumber;
     }
 
-    public abstract void deposit(double amount);
+    public void deposit(double amount) {
+        balance += amount;
+    }
 
-    public abstract void withdraw(double amount);
+    public void withdraw(double amount) {
+        if (balance > 0 && amount <= balance) {
+            balance -= amount;
+        } else {
+            System.out.println("There is not enough founds on your account");
+        }
+    }
 
-    public  double getBalance() {
+    public double getBalance() {
         return balance;
     }
 
