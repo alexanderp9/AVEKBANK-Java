@@ -16,13 +16,13 @@ public class BankDemo {
         System.out.println("Welcome to AVEK Bank!" +
                 "\nPlease enter your ID number and verify yourself on BankID: ");
 
-        try{
+        try {
             long bankId = sc.nextLong();
             Customer customer = new Customer(bankId);
             System.out.println("Authentication Succed!" +
                     "\nWelcome customer: " + bankId);
             mainMenu(customer);
-        } catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("BankID must be yyyymmdd");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -37,9 +37,9 @@ public class BankDemo {
 
         int userChoice;
         while (true) {
-            try{
+            try {
                 userChoice = sc.nextInt();
-            } catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 sc.nextLine();
                 System.out.println("Input must be a number. Try again.");
                 continue;
@@ -64,7 +64,7 @@ public class BankDemo {
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/AccountCollection/aboutBank.txt"))) {
             String fromFile;
-            while ((fromFile = bufferedReader.readLine()) != null){
+            while ((fromFile = bufferedReader.readLine()) != null) {
                 System.out.println(fromFile);
             }
         } catch (IOException e) {
@@ -74,7 +74,7 @@ public class BankDemo {
 
         int userChoice;
 
-        while (true){
+        while (true) {
             userChoice = sc.nextInt();
             if (userChoice == 0) {
                 mainMenu(customer);
@@ -90,20 +90,20 @@ public class BankDemo {
         int userAccountChoice = -1;
         while (userAccountChoice != 0) {
             System.out.println("Account page of customer: " + customer.getBankId());
-            if (customer.getAccounts().size() == 0){
+            if (customer.getAccounts().size() == 0) {
                 System.out.println("You have no accounts yet. Choose 7-9 to create one.");
             }
             System.out.println(customer.printoutAccountsWithIndex());
             System.out.println("1-6 - Choose account" +
-                            "\n7 - Create a new Creditcard account" +
-                            "\n8 - Create a new Checking account" +
-                            "\n9 - Create a new Saving account" +
-                            "\n0 - Return to homepage"
+                    "\n7 - Create a new Creditcard account" +
+                    "\n8 - Create a new Checking account" +
+                    "\n9 - Create a new Saving account" +
+                    "\n0 - Return to homepage"
             );
 
             try {
                 userAccountChoice = sc.nextInt();
-            } catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 sc.nextLine();
                 System.out.println("Input must be a number. Try again.\n");
                 continue;
@@ -133,14 +133,16 @@ public class BankDemo {
             System.out.println("Accounthandler page of customer: " + customer.getBankId());
             System.out.println(customer.printOutActualAccountBalance(accountIndex));
             System.out.println("1 - Deposit" + "\n2 - Withdraw");
-            if (customer.getAccounts().get(accountIndex-1).getAccountType().equals("Creditcard")) {
+            if (customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Creditcard")) {
                 System.out.println("3 - Change PIN-code for your card");
+            } else if (customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Saving")) {
+                System.out.println("3 - Lock interest rate");
             }
             System.out.println("0 - Go back to Account page");
 
             try {
                 userAccountChoice = sc.nextInt();
-            } catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 sc.nextLine();
                 System.out.println("Input must be a number. Try again.\n");
                 continue;
@@ -154,8 +156,8 @@ public class BankDemo {
                     System.out.println("How much do you want to deposit into your account? ");
                     amountInput = sc.nextDouble();
                     sc.nextLine();
-                    if (checkIfAmountValid(amountInput)){
-                        customer.getAccounts().get(accountIndex-1).deposit(amountInput);
+                    if (checkIfAmountValid(amountInput)) {
+                        customer.getAccounts().get(accountIndex - 1).deposit(amountInput);
                         accountHandler(customer, accountIndex);
                     }
                 } else if (userAccountChoice == 2) { //Withdraw
@@ -166,20 +168,31 @@ public class BankDemo {
                         customer.getAccounts().get(accountIndex - 1).withdraw(amountInput);
                         accountHandler(customer, accountIndex);
                     }
-                } else if (userAccountChoice == 3 && customer.getAccounts().get(accountIndex-1).getAccountType().equals("Creditcard")) {
-                    CreditCardAccount creditCardAccount = (CreditCardAccount) customer.getAccounts().get(accountIndex-1);
+                } else if (userAccountChoice == 3 && customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Creditcard")) {
+                    CreditCardAccount creditCardAccount = (CreditCardAccount) customer.getAccounts().get(accountIndex - 1);
                     System.out.println("Enter current PIN-code: ");
-                    String cardPIN = sc.nextLine();
+                    String cardPIN = sc.nextLine().trim();
                     System.out.println("Enter new code: ");
                     String newCardPIN = sc.nextLine();
                     creditCardAccount.changePIN(newCardPIN, cardPIN);
+                } else if (userAccountChoice == 3 && customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Saving")) {
+                    SavingBankAccount savingBankAccount = (SavingBankAccount) customer.getAccounts().get(accountIndex - 1);
+                    System.out.println("For how many years do you want to lock the interest rate?");
+                    System.out.println("1 - 1 year \n3 - 3 years \n5 - 5 years");
+                    String yearsLocked = sc.nextLine().trim();
+                    if (yearsLocked.equals("1") ||yearsLocked.equals("3") ||yearsLocked.equals("5")) {
+                        savingBankAccount.lockInterestRate(Integer.parseInt(yearsLocked));
+                    } else {
+                        System.out.println("Incorrect input. Enter 1, 3 or 5");
+                    }
 
-            } else if (userAccountChoice == 0) { //Back to handleAccount
+
+                } else if (userAccountChoice == 0) { //Back to handleAccount
                     accountsMenu(customer);
                 } else {
                     System.out.println("Wrong input. Try again.\n");
                 }
-            } catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 sc.nextLine();
                 System.out.println("Input must be a positive number. Try again.\n");
             } catch (InterruptedException e) {
@@ -205,7 +218,7 @@ public class BankDemo {
         }
     }
 
-    public static boolean checkIfAmountValid(double amount){ //check if the user enter a valid amount of money
+    public static boolean checkIfAmountValid(double amount) { //check if the user enter a valid amount of money
         return amount > 0 ? true : false;
     }
 }

@@ -48,6 +48,9 @@ public class Customer extends Person{
             if (account instanceof CreditCardAccount) {
                 CreditCardAccount creditCardAccount = (CreditCardAccount) account;
                 sb.append(", Kortnummer: ").append(creditCardAccount.getCardNumber()).append(", PIN-kod: ").append(creditCardAccount.getCardPIN());
+            } else if (account instanceof SavingBankAccount) {
+                SavingBankAccount savingBankAccount = (SavingBankAccount) account;
+                sb.append(", Amount of years locked: ").append(savingBankAccount.getLockPeriod()).append(", Interest rate: ").append(savingBankAccount.getInterestRate()*100).append("%");
             }
             sb.append("\n");
         }
