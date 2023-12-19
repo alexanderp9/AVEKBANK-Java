@@ -16,15 +16,15 @@ public abstract class BankAccount {
     }
 
     public void deposit(double amount) {
-        if (balance > 0 && amount <= balance) {
-            balance += amount;
-        } else {
-            System.out.println("Det finns inte tillräckligt med pengar på kontot");
-        }
+        balance += amount;
     }
 
     public void withdraw(double amount) {
-        balance -= amount;
+        if (balance > 0 && amount <= balance) {
+            balance -= amount;
+        } else {
+            System.out.println("There is not enough founds on your account");
+        }
     }
 
     public double getBalance() {

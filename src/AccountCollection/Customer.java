@@ -42,10 +42,9 @@ public class Customer extends Person{
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < accounts.size(); i++) {
             BankAccount account = accounts.get(i);
-            sb.append("Account choice: ").append(i+1).append(", ")
+            sb.append("Account choice: ").append(i+1).append(" - ")
                     .append(account.getAccountType()).append(" Account-number: ").append(account.getAccountNumber())
                     .append(", Balance: ").append(account.getBalance());
-                    //.append("\n");
             if (account instanceof CreditCardAccount) {
                 CreditCardAccount creditCardAccount = (CreditCardAccount) account;
                 sb.append(", Kortnummer: ").append(creditCardAccount.getCardNumber()).append(", PIN-kod: ").append(creditCardAccount.getCardPIN());

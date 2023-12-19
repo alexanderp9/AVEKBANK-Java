@@ -132,10 +132,11 @@ public class BankDemo {
         while (userAccountChoice != 0) {
             System.out.println("Accounthandler page of customer: " + customer.getBankId());
             System.out.println(customer.printOutActualAccountBalance(accountIndex));
-            System.out.println("1 - Deposit" +
-                            "\n2 - Withdraw" +
-                    //3 - Change PIN here if CreditAccount
-                            "\n0 - Go back to Account page");
+            System.out.println("1 - Deposit" + "\n2 - Withdraw");
+            if (customer.getAccounts().get(accountIndex-1).getAccountType().equals("Creditcard")) {
+                System.out.println("3 - Change PIN-code for your card");
+            }
+            System.out.println("0 - Go back to Account page");
 
             try {
                 userAccountChoice = sc.nextInt();
@@ -161,11 +162,19 @@ public class BankDemo {
                     System.out.println("How much do you want to withdraw your account? ");
                     amountInput = sc.nextDouble();
                     sc.nextLine();
-                    if (checkIfAmountValid(amountInput)){
-                        customer.getAccounts().get(accountIndex-1).withdraw(amountInput);
+                    if (checkIfAmountValid(amountInput)) {
+                        customer.getAccounts().get(accountIndex - 1).withdraw(amountInput);
                         accountHandler(customer, accountIndex);
                     }
-                } else if (userAccountChoice == 0) { //Back to handleAccount
+                } else if (userAccountChoice == 3 && customer.getAccounts().get(accountIndex-1).getAccountType().equals("Creditcard")) {
+                    CreditCardAccount creditCardAccount = (CreditCardAccount) customer.getAccounts().get(accountIndex-1);
+                    System.out.println("Enter current PIN-code: ");
+                    String cardPIN = sc.nextLine();
+                    System.out.println("Enter new code: ");
+                    String newCardPIN = sc.nextLine();
+                    creditCardAccount.changePIN(newCardPIN, cardPIN);
+
+            } else if (userAccountChoice == 0) { //Back to handleAccount
                     accountsMenu(customer);
                 } else {
                     System.out.println("Wrong input. Try again.\n");

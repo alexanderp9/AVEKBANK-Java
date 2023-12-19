@@ -2,7 +2,7 @@ package AccountCollection;
 
 import java.util.Random;
 
-public class CreditCardAccount extends BankAccount{
+public class CreditCardAccount extends BankAccount {
 
     private int cardNumber;
     private int cardPIN;
@@ -15,20 +15,38 @@ public class CreditCardAccount extends BankAccount{
         return cardPIN;
     }
 
-    public void changePIN (int newPIN, int oldPIN) {
-        if (oldPIN == cardPIN) {
-            cardPIN = newPIN;
+    public void changePIN(String newPIN, String oldPIN) {
+        if (isFourNumberLong(oldPIN) & isFourNumberLong(newPIN)) {
+            if (Integer.parseInt(oldPIN) == cardPIN) {
+            cardPIN = Integer.parseInt(newPIN);
+            } else {
+                System.out.println("Incorrect PIN-code");
+            }
+        } else {
+            System.out.println("PIN most be 4 digits long");
         }
+
     }
 
-    public void getRandomizedCardNumber(){
-        Random random = new Random();
-        cardNumber = random.nextInt(100000,999999);
+    private boolean isFourNumberLong(String PIN) {
+        if (PIN.length() != 4) {
+            return false;
+        }
+        for (char c : PIN.toCharArray())
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        return true;
     }
 
-    public void getRandomizedPINCode(){
+    public void getRandomizedCardNumber() {
         Random random = new Random();
-        cardPIN = random.nextInt(1000,9999);
+        cardNumber = random.nextInt(100000, 999999);
+    }
+
+    public void getRandomizedPINCode() {
+        Random random = new Random();
+        cardPIN = random.nextInt(1000, 9999);
     }
 
 }
