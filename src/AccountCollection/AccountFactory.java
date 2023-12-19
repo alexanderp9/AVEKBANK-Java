@@ -10,6 +10,10 @@ public class AccountFactory {
                 account = new CheckingBankAccount();
                 account.setAccountType(AccountType.CHECKING.accounttype); //register the account type to the account
                 break;
+            case CREDITCARD:
+                account = new CreditCardAccount();
+                account.setAccountType(AccountType.CREDITCARD.accounttype);
+                break;
             case SAVING:
                 account = new SavingBankAccount();
                 account.setAccountType(AccountType.SAVING.accounttype); //register the account type to the account

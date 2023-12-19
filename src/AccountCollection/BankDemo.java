@@ -1,5 +1,8 @@
 package AccountCollection;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -58,14 +61,16 @@ public class BankDemo {
     }
 
     private static void aboutBank(Customer customer) throws InterruptedException {
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++" +
-                "\t\t\t\tInfo om banken" +
-                "\nVi är AVEK Bank. Vi tar hand om dina pengar säkert." +
-                "\n+++++++++++++++++++++++++++++++++++++++++++++++++" +
-                "\nÖppettider måndag - fredag 8 - 16" +
-                "\nAdress:" +
-                "\nTelefon nummer:");
-        System.out.println("\n0 - Return to homepage");
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/AccountCollection/aboutBank.txt"))) {
+            String fromFile;
+            while ((fromFile = bufferedReader.readLine()) != null){
+                System.out.println(fromFile);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error reading file");
+        }
 
         int userChoice;
 
@@ -86,10 +91,11 @@ public class BankDemo {
         while (userAccountChoice != 0) { // kommer köra loopen tills vi trycker 0 så hoppar den ut och tillbaka till main loopen
             System.out.println("Account page of customer: " + customer.getBankId());
             if (customer.getAccounts().size() == 0){
-                System.out.println("You have empty accounts now. Choose 8-9 to create one.");
+                System.out.println("You have no accounts yet. Choose 7-9 to create one.");
             }
             System.out.println(customer.printoutAccountsWithIndex());
-            System.out.println("1-7 - Choose account" +
+            System.out.println("1-6 - Choose account" +
+                            "\n7 - Create a new Creditcard account" +
                             "\n8 - Create a new Checking account" +
                             "\n9 - Create a new Saving account" +
                             "\n0 - Return to homepage"
@@ -107,6 +113,8 @@ public class BankDemo {
 
             if (userAccountChoice >= 1 && userAccountChoice <= customer.getAccounts().size() && !customer.getAccounts().isEmpty()) {
                 accountHandler(customer, userAccountChoice);
+            } else if (userAccountChoice == 7) {
+                customer.addAccountToList(AccountType.CREDITCARD);
             } else if (userAccountChoice == 8) {
                 customer.addAccountToList(AccountType.CHECKING);
             } else if (userAccountChoice == 9) {

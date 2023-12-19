@@ -2,8 +2,7 @@ package AccountCollection;
 
 import java.util.Random;
 
-public class SavingBankAccount extends BankAccount {
-    private double interestRate;
+public class CreditCardAccount extends BankAccount{
     @Override
     public void deposit(double amount) {
         super.balance += amount;
