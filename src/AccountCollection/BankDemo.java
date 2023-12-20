@@ -131,15 +131,16 @@ public class BankDemo {
     }
 
     private static void accountHandler(Customer customer, int accountIndex) {
+        TransactionInvoker transactionInvoker;
         int userAccountChoice = -1;
         while (userAccountChoice != 0) {
             System.out.println("Accounthandler page of customer: " + customer.getBankId());
             System.out.println(customer.printOutActualAccountBalance(accountIndex));
-            System.out.println("1 - Deposit" + "\n2 - Withdraw");
+            System.out.println("1 - Deposit" + "\n2 - Withdraw \n3 - See transaction history");
             if (customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Creditcard")) {
-                System.out.println("3 - Change PIN-code for your card");
+                System.out.println("4 - Change PIN-code for your card");
             } else if (customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Saving")) {
-                System.out.println("3 - Lock interest rate");
+                System.out.println("4 - Lock interest rate");
             }
             System.out.println("0 - Go back to Account page");
 
@@ -160,7 +161,9 @@ public class BankDemo {
                     amountInput = sc.nextDouble();
                     sc.nextLine();
                     if (checkIfAmountValid(amountInput)) {
-                        customer.getAccounts().get(accountIndex - 1).deposit(amountInput);
+                        saveTransaction("deposit", amountInput, customer.getAccounts().get(accountIndex - 1));
+                        //customer.getAccounts().get(accountIndex - 1).addTransactionHistory();
+                        //customer.getAccounts().get(accountIndex - 1).deposit(amountInput);
                         accountHandler(customer, accountIndex);
                     }
                 } else if (userAccountChoice == 2) { //Withdraw
@@ -168,17 +171,23 @@ public class BankDemo {
                     amountInput = sc.nextDouble();
                     sc.nextLine();
                     if (checkIfAmountValid(amountInput)) {
-                        customer.getAccounts().get(accountIndex - 1).withdraw(amountInput);
+                        saveTransaction("withdraw", amountInput, customer.getAccounts().get(accountIndex - 1));
+                        //customer.getAccounts().get(accountIndex - 1).withdraw(amountInput);
                         accountHandler(customer, accountIndex);
                     }
-                } else if (userAccountChoice == 3 && customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Creditcard")) {
+                } else if (userAccountChoice == 3) {
+                    System.out.println(customer.getAccounts().get(accountIndex - 1).getTransactionHistory().toString());
+
+
+
+                } else if (userAccountChoice == 4 && customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Creditcard")) {
                     CreditCardAccount creditCardAccount = (CreditCardAccount) customer.getAccounts().get(accountIndex - 1);
                     System.out.println("Enter current PIN-code: ");
                     String cardPIN = sc.nextLine().trim();
                     System.out.println("Enter new code: ");
                     String newCardPIN = sc.nextLine();
                     creditCardAccount.changePIN(newCardPIN, cardPIN);
-                } else if (userAccountChoice == 3 && customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Saving")) {
+                } else if (userAccountChoice == 4 && customer.getAccounts().get(accountIndex - 1).getAccountType().equals("Saving")) {
                     SavingBankAccount savingBankAccount = (SavingBankAccount) customer.getAccounts().get(accountIndex - 1);
                     System.out.println("For how many years do you want to lock the interest rate?");
                     System.out.println("1 - 1 year \n3 - 3 years \n5 - 5 years");
@@ -257,6 +266,20 @@ public class BankDemo {
     public static boolean checkIfAmountValid(double amount) { //check if the user enter a valid amount of money
         return amount > 0 ? true : false;
     }
+
+    public static void saveTransaction (String type, double amount, BankAccount account) {
+        Transaction transaction;
+        TransactionInvoker transactionInvoker = new TransactionInvoker();
+        if (type.equals("deposit")) {
+            transaction = new DepositTransaction(account, amount);
+        } else if (type.equals("withdraw")) {
+            transaction = new WithdrawTransaction(account, amount);
+    } else {
+        throw new IllegalArgumentException("Invalid transaction type");
+        }
+        transactionInvoker.executeTransaction(transaction);
+    }
+
 }
 
 
