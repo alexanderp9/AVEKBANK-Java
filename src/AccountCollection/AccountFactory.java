@@ -8,7 +8,7 @@ public class AccountFactory {
         switch (accountType) {
             case CHECKING:
                 account = new CheckingBankAccount();
-                account.setAccountType(AccountType.CHECKING.accounttype); //register the account type to the account
+                account.setAccountType(AccountType.CHECKING.accounttype);
                 break;
             case CREDITCARD:
                 CreditCardAccount creditCardAccount = new CreditCardAccount();
@@ -19,7 +19,7 @@ public class AccountFactory {
                 break;
             case SAVING:
                 account = new SavingBankAccount();
-                account.setAccountType(AccountType.SAVING.accounttype); //register the account type to the account
+                account.setAccountType(AccountType.SAVING.accounttype);
                 break;
             default:
                 System.out.println("Fel input i AccountFactory"); break;

@@ -31,12 +31,12 @@ public class SavingBankAccount extends BankAccount {
                     foundRates = true;
                 } else if (foundRates) {
                     if (line.trim().isEmpty()) {
-                        break; // Stop reading if we reach an empty line after finding rates
+                        break;
                     }
-                    // Extract and set interest rate based on yearsLocked
+
                     if (line.contains(yearsLocked + "år")) {
                         String rateStr = line.split("-")[1].trim().replace("%", "").replace(",", ".");
-                        interestRate = Double.parseDouble(rateStr) / 100.0; // Convert to decimal
+                        interestRate = Double.parseDouble(rateStr) / 100.0;
                         lockPeriod = yearsLocked;
                         System.out.println("Interest rate locked at " + interestRate*100 + "% for " + lockPeriod + " years.");
                         break;
