@@ -15,7 +15,8 @@ public class AccountFactory {
                 account.setAccountType(AccountType.SAVING.accounttype); //register the account type to the account
                 break;
             default:
-                System.out.println("Fel input i AccountFactory"); break;
+                System.out.println("Fel input i AccountFactory");
+                break;
         }
         return account;
     }

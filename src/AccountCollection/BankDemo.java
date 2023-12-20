@@ -1,32 +1,63 @@
 package AccountCollection;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class BankDemo {
 
     private static final Scanner sc = new Scanner(System.in);
+    private Customer currentCustomer;
 
 
-    public static void main(String[] args) {
+    public BankDemo() {
+        currentCustomer = null;
+    }
 
-        System.out.println("Welcome to AVEK Bank!" +
-                "\nPlease enter your ID number and verify yourself on BankID: ");
+    public void runBankApp() throws InterruptedException {
+        authenticateCustomer();
+        if (currentCustomer != null) {
+            mainMenu();
+        }
 
-        try{
-            int bankId = sc.nextInt();
-            Customer customer = new Customer(bankId);
-            System.out.println("Authentication Succed!" +
-                    "\nWelcome customer: " + bankId);
-            mainMenu(customer);
-        } catch (InputMismatchException e){
-            System.out.println("BankID must be yyyymmdd");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    }
+
+    public void authenticateCustomer() {
+        System.out.println("Welcome to AVEK Bank!");
+        boolean isAuthenticated = false;
+        while (!isAuthenticated) {
+            System.out.println("\nPlease enter your ID number and verify yourself on BankID: ");
+            try {
+                String bankIdStr = sc.nextLine();
+                if (bankIdStr.length() == 12 && bankIdStr.matches("\\d+")) {
+                    long bankId = Long.parseLong(bankIdStr);
+                    if (isValidBankid(bankId)) {
+                        currentCustomer = new Customer(bankId);
+                        System.out.println("Succesful authentication!\n" +
+                                "\nWelcome customer: " + bankId);
+                        isAuthenticated = true;
+                    } else {
+                        System.out.println("Invalid BankID, try again!");
+                    }
+                } else {
+                    System.out.println("BankID must be 12-digit number");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("BankID must be a 12-digit number");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    private static void mainMenu(Customer customer) throws InterruptedException {
+    public boolean isValidBankid(long bankId) throws Exception {
+        List<String> validIds = Files.readAllLines(Paths.get("src/AccountCollection/Register.txt"));
+        return validIds.contains(String.valueOf(bankId));
+        }
+
+    private void mainMenu() throws InterruptedException {
         System.out.println("1 - About Bank " +
                 "\n2 - My Accounts " +
                 "\n3 - Contact Bank" +
@@ -43,11 +74,11 @@ public class BankDemo {
             }
 
             if (userChoice == 1) {
-                aboutBank(customer);
+                aboutBank();
             } else if (userChoice == 2) {
-                accountsMenu(customer);
+                accountsMenu();
             } else if (userChoice == 3) {
-                contactBank(customer);
+                contactBank();
             } else if (userChoice == 4) {
                 System.out.println("Thank you. Bye.");
                 System.exit(0);
@@ -57,7 +88,7 @@ public class BankDemo {
         }
     }
 
-    private static void aboutBank(Customer customer) throws InterruptedException {
+    private void aboutBank() throws InterruptedException {
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++" +
                 "\t\t\t\tInfo om banken" +
                 "\nVi är AVEK Bank. Vi tar hand om dina pengar säkert." +
@@ -72,7 +103,7 @@ public class BankDemo {
         while (true){
             userChoice = sc.nextInt();
             if (userChoice == 0) {
-                mainMenu(customer);
+                mainMenu();
             } else {
                 System.out.println("Invalid input. Try again.");
                 sc.nextLine();
@@ -80,15 +111,15 @@ public class BankDemo {
         }
     }
 
-    private static void accountsMenu(Customer customer) throws InterruptedException {
+    private void accountsMenu() throws InterruptedException {
 
         int userAccountChoice = -1;
         while (userAccountChoice != 0) { // kommer köra loopen tills vi trycker 0 så hoppar den ut och tillbaka till main loopen
-            System.out.println("Account page of customer: " + customer.getBankId());
-            if (customer.getAccounts().size() == 0){
+            System.out.println("Account page of customer: " + currentCustomer.getBankId());
+            if (currentCustomer.getAccounts().size() == 0){
                 System.out.println("You have empty accounts now. Choose 8-9 to create one.");
             }
-            System.out.println(customer.printoutAccountsWithIndex());
+            System.out.println(currentCustomer.printoutAccountsWithIndex());
             System.out.println("1-7 - Choose account" +
                             "\n8 - Create a new Checking account" +
                             "\n9 - Create a new Saving account" +
@@ -105,27 +136,29 @@ public class BankDemo {
 
             sc.nextLine();
 
-            if (userAccountChoice >= 1 && userAccountChoice <= customer.getAccounts().size() && !customer.getAccounts().isEmpty()) {
-                accountHandler(customer, userAccountChoice);
+            if (userAccountChoice >= 1 && userAccountChoice <= currentCustomer.getAccounts().size() && !currentCustomer.getAccounts().isEmpty()) {
+                accountHandler(userAccountChoice);
             } else if (userAccountChoice == 8) {
-                customer.addAccountToList(AccountType.CHECKING);
+                currentCustomer.addAccountToList(AccountType.CHECKING);
             } else if (userAccountChoice == 9) {
-                customer.addAccountToList(AccountType.SAVING);
+                currentCustomer.addAccountToList(AccountType.SAVING);
             } else if (userAccountChoice == 0) {
-                mainMenu(customer);
+                mainMenu();
             } else {
                 System.out.println("Input invalid. Try again.\n");
             }
         }
     }
 
-    private static void accountHandler(Customer customer, int accountIndex) {
+    private void accountHandler(int accountIndex) {
+
         int userAccountChoice = -1;
         while (userAccountChoice != 0) {
-            System.out.println("Accounthandler page of customer: " + customer.getBankId());
-            System.out.println(customer.printOutActualAccountBalance(accountIndex));
+            System.out.println("Accounthandler page of customer: " + currentCustomer.getBankId());
+            System.out.println(currentCustomer.printOutActualAccountBalance(accountIndex));
             System.out.println("1 - Deposit" +
                             "\n2 - Withdraw" +
+                            "\n3 - Simulate one year passing" +
                             "\n0 - Go back to Account page");
 
             try {
@@ -145,19 +178,22 @@ public class BankDemo {
                     amountInput = sc.nextDouble();
                     sc.nextLine();
                     if (checkIfAmountValid(amountInput)){
-                        customer.getAccounts().get(accountIndex-1).deposit(amountInput);
-                        accountHandler(customer, accountIndex);
+                        currentCustomer.getAccounts().get(accountIndex-1).deposit(amountInput);
+                        accountHandler(accountIndex);
                     }
                 } else if (userAccountChoice == 2) { //Withdraw
                     System.out.println("How much do you want to withdraw your account? ");
                     amountInput = sc.nextDouble();
                     sc.nextLine();
-                    if (checkIfAmountValid(amountInput)){
-                        customer.getAccounts().get(accountIndex-1).withdraw(amountInput);
-                        accountHandler(customer, accountIndex);
+                    if (checkIfAmountValid(amountInput)) {
+                        currentCustomer.getAccounts().get(accountIndex - 1).withdraw(amountInput);
+                        accountHandler(accountIndex);
                     }
+                } else if (userAccountChoice == 3) {
+                    simulateYear(accountIndex);
+
                 } else if (userAccountChoice == 0) { //Back to handleAccount
-                    accountsMenu(customer);
+                    accountsMenu();
                 } else {
                     System.out.println("Input must be a positive number. Try again.\n");
                 }
@@ -170,18 +206,18 @@ public class BankDemo {
         }
     }
 
-    public static void contactBank(Customer customer) throws InterruptedException {
-        System.out.println("Customer: " + customer.getBankId() + "\nPlease enter your message: ");
+    public void contactBank() throws InterruptedException {
+        System.out.println("Customer: " + currentCustomer.getBankId() + "\nPlease enter your message: ");
         if (sc.hasNextLine()) {
             sc.nextLine();
         }
         String userMessageInput = sc.nextLine();
 
         if (!userMessageInput.isEmpty()) {
-            System.out.println("Your message has been sent, thank you! " + "Customer: " + customer.getBankId());
+            System.out.println("Your message has been sent, thank you! " + "Customer: " + currentCustomer.getBankId());
             System.out.println("Returning to homepage..");
             Thread.sleep(3000);
-            mainMenu(customer);
+            mainMenu();
         } else {
             System.out.println("Please enter a valid message.");
         }
@@ -189,6 +225,16 @@ public class BankDemo {
 
     public static boolean checkIfAmountValid(double amount){ //check if the user enter a valid amount of money
         return amount > 0 ? true : false;
+    }
+
+    private void simulateYear(int accountIndex) {
+        BankAccount account = currentCustomer.getAccounts().get(accountIndex - 1);
+        if (account instanceof SavingBankAccount) {
+            ((SavingBankAccount) account).simulateOneYearPast();
+            System.out.println("A year has now passed");
+        } else {
+            System.out.println("This option is only available for SavingsAccount\n");
+        }
     }
 }
 

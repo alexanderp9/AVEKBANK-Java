@@ -6,13 +6,11 @@ import java.util.Random;
 
 public class Customer extends Person{
 
-    private int bankId;
+    private long bankId;
     private List<BankAccount> accounts;
 
-    //list<BankAccount> Saving;
-    //list<BankAccount> Checking;
 
-    public Customer(int bankId) {
+    public Customer(long bankId) {
         this.bankId = bankId;
         this.accounts = new ArrayList<>();
     }
@@ -37,7 +35,7 @@ public class Customer extends Person{
         accounts.remove(0);  //More logic need for removing the correct account. Maybe with account.getAccountNumber
     }
 
-    public int getBankId() {
+    public long getBankId() {
         return bankId;
     }
     public List<BankAccount> getAccounts() {
