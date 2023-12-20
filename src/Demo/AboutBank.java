@@ -10,11 +10,6 @@ public class AboutBank extends PageCreator{
     }
 
     @Override
-    public void doAction() {
-
-    }
-
-    @Override
     public void printState(){
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++" +
                 "\n\t\t\t\tInfo om banken" +

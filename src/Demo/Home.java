@@ -13,12 +13,6 @@ public class Home extends PageCreator{
         setScanner(getScanner());
     }
 
-    @Override
-    public void doAction() {
-//        printState();
-    }
-
-
     public void printState(){
         System.out.println("Welcome to AVEK Bank!" +
                 "\nPlease enter your ID number and verify yourself on BankID: ");
@@ -28,11 +22,8 @@ public class Home extends PageCreator{
             setCustomer(new Customer(bankId));
             System.out.println("Authentication Succed!" +
                     "\nWelcome customer: " + bankId);
-//            mainMenu(customer);
             MainMenu mainMenu = new MainMenu(getContext(),getCustomer(),getScanner());
             getContext().refreshState(mainMenu);
-//            mainMenu.setContext(getContext());
-//            mainMenu.doAction();
             getContext().getPageState();
         } catch (InputMismatchException e){
             System.out.println("BankID must be yyyymmdd");

@@ -12,11 +12,6 @@ public class AccountMenu extends PageCreator {
     }
 
     @Override
-    public void doAction() {
-
-    }
-
-    @Override
     public void printState() {
 
         int userAccountChoice = -1;

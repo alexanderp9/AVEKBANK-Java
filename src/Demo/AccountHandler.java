@@ -5,8 +5,6 @@ import AccountCollection.Customer;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static Demo.BankDemo.checkIfAmountValid;
-
 public class AccountHandler extends PageCreator{
 
     private int userChoice;
@@ -20,11 +18,6 @@ public class AccountHandler extends PageCreator{
 
     public void setUserChoice(int userChoice) {
         this.userChoice = userChoice;
-    }
-
-    @Override
-    public void doAction() {
-
     }
 
     @Override
@@ -60,7 +53,6 @@ public class AccountHandler extends PageCreator{
                         customer.getAccounts().get(accountIndex-1).deposit(amountInput);
                         System.out.println(customer.getAccounts().get(accountIndex-1).printAllHistory());
                         break;
-//                        accountHandler(customer, accountIndex);
                     }
                 } else if (userAccountChoice == 2) { //Withdraw
                     System.out.println("How much do you want to withdraw your account? ");
@@ -70,16 +62,13 @@ public class AccountHandler extends PageCreator{
                         customer.getAccounts().get(accountIndex-1).withdraw(amountInput);
                         System.out.println(customer.getAccounts().get(accountIndex-1).printAllHistory());
                         break;
-//                        accountHandler(customer, accountIndex);
                     }
                 } else if (userAccountChoice == 0) { //Back to handleAccount
-//                    accountsMenu(customer);
                     break;
                 } else {
                     System.out.println("Input must be a positive number. Try again.\n");
                     continue;
                 }
-//                accountHandler(customer, accountIndex);
                 AccountMenu accountMenu = new AccountMenu(getContext(),getCustomer(),getScanner());
                 getContext().refreshState(accountMenu);
             } catch (InputMismatchException e){
@@ -87,5 +76,9 @@ public class AccountHandler extends PageCreator{
                 System.out.println("Input must be a positive number. Try again.\n");
             }
         }
+    }
+
+    public static boolean checkIfAmountValid(double amount){ //check if the user enter a valid amount of money
+        return amount > 0 ? true : false;
     }
 }

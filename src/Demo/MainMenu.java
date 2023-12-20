@@ -6,15 +6,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainMenu extends PageCreator{
-
-
     public MainMenu(Context context, Customer customer, Scanner scanner) {
         super(context, customer, scanner);
-    }
-
-    @Override
-    public void doAction() {
-        printState();
     }
 
     public void printState(){

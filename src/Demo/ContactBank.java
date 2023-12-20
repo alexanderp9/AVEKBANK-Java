@@ -10,11 +10,6 @@ public class ContactBank extends PageCreator{
     }
 
     @Override
-    public void doAction() {
-
-    }
-
-    @Override
     public void printState() {
         Customer customer = getCustomer();
         Scanner sc = getScanner();
@@ -32,8 +27,8 @@ public class ContactBank extends PageCreator{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            AccountMenu accountMenu = new AccountMenu(getContext(),getCustomer(),getScanner());
-            getContext().refreshState(accountMenu);
+            MainMenu mainMenu = new MainMenu(getContext(),getCustomer(),getScanner());
+            getContext().refreshState(mainMenu);
         } else {
             System.out.println("Please enter a valid message.");
         }
