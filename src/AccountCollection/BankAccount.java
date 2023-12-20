@@ -7,7 +7,6 @@ public abstract class BankAccount {
 
     private int accountNumber;
     protected double balance;
-
     private String accountType;
 
     static private ArrayList<String> accountHistory = new ArrayList<>();

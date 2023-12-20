@@ -24,7 +24,6 @@ public class Home extends PageCreator{
                     "\nWelcome customer: " + bankId);
             MainMenu mainMenu = new MainMenu(getContext(),getCustomer(),getScanner());
             getContext().refreshState(mainMenu);
-            getContext().getPageState();
         } catch (InputMismatchException e){
             System.out.println("BankID must be yyyymmdd");
         }
