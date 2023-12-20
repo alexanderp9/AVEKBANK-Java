@@ -9,11 +9,6 @@ public class Customer extends Person{
     private int bankId;
     private List<BankAccount> accounts;
 
-    private ArrayList<String> accountHistory;
-
-    //list<BankAccount> Saving;
-    //list<BankAccount> Checking;
-
     public Customer(int bankId) {
         this.bankId = bankId;
         this.accounts = new ArrayList<>();
@@ -25,9 +20,6 @@ public class Customer extends Person{
         BankAccount newAccount = AccountFactory.createAccount(accountType);
         newAccount.setAccountNumber(getRandomizedAccountNr());
         accounts.add(newAccount);
-
-        //accounts.add(AccountFactory.createAccount(accountType));  //Creating an account with createAccount() from class AccountFactory
-        // and adding to Customer List<BankAccount> accounts
     }
 
     public int getRandomizedAccountNr(){
