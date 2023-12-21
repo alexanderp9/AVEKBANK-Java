@@ -15,8 +15,6 @@ public class Customer extends Person{
         this.accounts = new ArrayList<>();
     }
 
-
-
     public void addAccountToList(AccountType accountType) {
         BankAccount newAccount = AccountFactory.createAccount(accountType);
         newAccount.setAccountNumber(getRandomizedAccountNr());
