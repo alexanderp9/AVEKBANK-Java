@@ -19,6 +19,6 @@ public class WithdrawTransaction implements Transaction{
 
     @Override
     public String toString() {
-        return "Withdraw " + amount + "kr to account number " + account.getAccountNumber();
+        return "Withdraw " + amount + "kr from account number " + account.getAccountNumber();
     }
 }

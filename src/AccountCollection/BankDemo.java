@@ -30,7 +30,7 @@ public class BankDemo {
     }
 
     private static void mainMenu(Customer customer) throws InterruptedException {
-        System.out.println("1 - About Bank " +
+        System.out.println("1 - About Bank and current interest rates " +
                 "\n2 - My Accounts " +
                 "\n3 - Contact Bank" +
                 "\n4 - Q&A" +
