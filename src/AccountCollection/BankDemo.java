@@ -29,7 +29,7 @@ public class BankDemo {
         }
     }
 
-    private static void mainMenu(Customer customer) throws InterruptedException {
+    private static void mainMenu(Customer customer) throws InterruptedException { //h
         System.out.println("1 - About Bank and current interest rates " +
                 "\n2 - My Accounts " +
                 "\n3 - Contact Bank" +
